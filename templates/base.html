@@ -4,31 +4,53 @@
 <head>
     <title>AgeWell360</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
 
-<header>
-    <h1>AgeWell360</h1>
-    <p>Smart Technology for Safer Aging</p>
-    {% if user.is_authenticated %}
-    <nav>
-        <a href="/home/">Home</a>
-        <a href="/features/">Features</a>
-        <a href="/about/">About</a>
-        <a href="/profile/">Profile</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    </nav>
-    {% endif %}
+<header class="site-header">
+        <button class="hamburger-btn" id="globalHamburger" aria-label="Open menu" aria-expanded="false">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </button>
+
+        <h1>AgeWell360</h1>
+        <p>Smart Technology for Safer Aging</p>
+
+        {% if user.is_authenticated %}
+        <div class="site-overlay" id="globalOverlay" tabindex="-1"></div>
+        <nav class="side-menu" id="globalSideMenu" aria-hidden="true">
+                <h4>Navigate</h4>
+                <a class="menu-link" href="/home/">Home</a>
+                <a class="menu-link" href="/features/">Features</a>
+                <a class="menu-link" href="/about/">About</a>
+                <a class="menu-link" href="/profile/">Profile</a>
+                <a class="menu-link" href="{% url 'logout' %}">Logout</a>
+        </nav>
+        {% endif %}
 </header>
+
+<script>
+    (function(){
+        const ham = document.getElementById('globalHamburger');
+        const menu = document.getElementById('globalSideMenu');
+        const overlay = document.getElementById('globalOverlay');
+        if(!ham) return;
+        function openMenu(){ menu.classList.add('show'); overlay.classList.add('show'); menu.setAttribute('aria-hidden','false'); ham.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+        function closeMenu(){ menu.classList.remove('show'); overlay.classList.remove('show'); menu.setAttribute('aria-hidden','true'); ham.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+        ham.addEventListener('click', function(){ if(menu.classList.contains('show')) closeMenu(); else openMenu(); });
+        overlay && overlay.addEventListener('click', closeMenu);
+        Array.from(menu.querySelectorAll('a')).forEach(a=>{ a.addEventListener('click', function(e){ const href = this.getAttribute('href'); if(!href || href.startsWith('http')) return; e.preventDefault(); closeMenu(); document.body.classList.add('fade-out'); setTimeout(()=> window.location.href = href, 260); }) });
+    })();
+</script>
 
 <div class="container">
     {% block content %}
     {% endblock %}
 </div>
 
-<footer>
-    © 2025 AgeWell360
-</footer>
+<!-- footer removed as requested -->
 
 </body>
 </html>

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="profile-top-banner">
+  <div class="banner-inner">
+    <button class="hamburger-btn banner-btn left" id="profileHamburger" aria-label="Open menu" aria-expanded="false">
+      <span class="line"></span>
+      <span class="line"></span>
+      <span class="line"></span>
+    </button>
+    <div class="banner-title">AgeWell360</div>
+    <button id="edit-toggle" class="banner-btn right">Edit Profile</button>
+  </div>
+</div>
+
+<main class="profile-page">
+  <div class="profile-header">
+    <div class="profile-avatar-wrap">
+      <img id="avatarImg" src="{% static 'images/default-avatar.png' %}" alt="Profile photo" class="profile-avatar">
+    </div>
+
+    <div class="profile-summary">
+      <h2 id="display-name">{{ user.get_full_name|default:user.username }}</h2>
+      <div class="meta"><span id="display-age">Age: {{ profile.age|default:"-" }}</span></div>
+      <div class="meta"><span id="display-phone">Phone: {{ profile.phone|default:"-" }}</span></div>
+      <div class="meta"><span id="display-family">Family contact: {{ profile.family_contact|default:"-" }}</span></div>
+      <div class="meta"><span id="display-address">Address: {{ profile.address|default:"-" }}</span></div>
+    </div>
+  </div>
+
+  <section class="profile-card">
+    <form id="profileForm" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <!-- photo input included here so it will be submitted with the profile form -->
+      <input type="file" id="photoInput" name="photo" accept="image/*" style="display:none;">
+      <div class="form-row">
+        <label>Full Name</label>
+        <div class="view-mode" id="view-fullname">{{ user.get_full_name|default:user.username }}</div>
+        <input class="edit-mode" id="input-fullname" type="text" name="full_name" value="{{ user.get_full_name }}">
+      </div>
+
+      <div class="form-row">
+        <label>Age</label>
+        <div class="view-mode" id="view-age">{{ profile.age|default:"-" }}</div>
+        <input class="edit-mode" id="input-age" type="number" name="age" value="{{ profile.age }}">
+      </div>
+
+      <div class="form-row">
+        <label>Phone</label>
+        <div class="view-mode" id="view-phone">{{ profile.phone|default:"-" }}</div>
+        <input class="edit-mode" id="input-phone" type="tel" name="phone" value="{{ profile.phone }}">
+      </div>
+
+      <div class="form-row">
+        <label>Family Contact</label>
+        <div class="view-mode" id="view-family">{{ profile.family_contact|default:"-" }}</div>
+        <input class="edit-mode" id="input-family" type="tel" name="family_contact" value="{{ profile.family_contact }}">
+      </div>
+
+      <div class="form-row">
+        <label>Address</label>
+        <div class="view-mode" id="view-address">{{ profile.address|default:"-" }}</div>
+        <textarea class="edit-mode" id="input-address" name="address">{{ profile.address }}</textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" id="editBtn" class="btn-primary">Edit</button>
+        <button type="submit" id="saveBtn" class="btn-primary" style="display:none;">Save</button>
+        <button type="button" id="cancelBtn" class="btn" style="display:none;">Cancel</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<script>
+// Toggle between view and edit modes
+const editToggle = document.getElementById('edit-toggle') || document.getElementById('editBtn');
+const editBtn = document.getElementById('editBtn');
+const saveBtn = document.getElementById('saveBtn');
+const cancelBtn = document.getElementById('cancelBtn');
+const viewEls = document.querySelectorAll('.view-mode');
+const editEls = document.querySelectorAll('.edit-mode');
+const photoInput = document.getElementById('photoInput');
+const avatarImg = document.getElementById('avatarImg');
+
+function setEditMode(on){
+  viewEls.forEach(e=> e.style.display = on ? 'none' : 'block');
+  editEls.forEach(e=> e.style.display = on ? 'block' : 'none');
+  if(on){
+    saveBtn.style.display = 'inline-block';
+    cancelBtn.style.display = 'inline-block';
+    editBtn.style.display = 'none';
+  } else {
+    saveBtn.style.display = 'none';
+    cancelBtn.style.display = 'none';
+    editBtn.style.display = 'inline-block';
+  }
+}
+
+if(editToggle){
+  editToggle.addEventListener('click', ()=> setEditMode(true));
+}
+if(editBtn){
+  editBtn.addEventListener('click', ()=> setEditMode(true));
+}
+if(cancelBtn){
+  cancelBtn.addEventListener('click', ()=> setEditMode(false));
+}
+
+// Clicking avatar opens file picker
+avatarImg.addEventListener('click', ()=> photoInput.click());
+photoInput.addEventListener('change', (evt)=>{
+  const file = evt.target.files[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  avatarImg.src = url;
+});
+
+// On submit, form will post to server. Leave default behavior.
+
+// initialize page in view mode
+setEditMode(false);
+</script>
+
+<script>
+  // Wire profile-page hamburger to the global side menu (if present)
+  (function(){
+    const profHam = document.getElementById('profileHamburger');
+    if(!profHam) return;
+    profHam.addEventListener('click', ()=>{
+      const globalMenu = document.getElementById('globalSideMenu');
+      const globalOverlay = document.getElementById('globalOverlay');
+      const globalHam = document.getElementById('globalHamburger');
+      if(globalMenu && globalOverlay){
+        const isOpen = globalMenu.classList.contains('show');
+        if(isOpen){ globalMenu.classList.remove('show'); globalOverlay.classList.remove('show'); globalMenu.setAttribute('aria-hidden','true'); profHam.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+        else{ globalMenu.classList.add('show'); globalOverlay.classList.add('show'); globalMenu.setAttribute('aria-hidden','false'); profHam.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+      } else {
+        // fallback: navigate home
+        window.location.href = '/home/';
+      }
+    });
+  })();
+</script>
+
+{% endblock %}

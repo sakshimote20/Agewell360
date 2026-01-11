@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Welcome to AgeWell360</h2>
+<div class="home-hero page-fade" id="homeHero">
+    <div class="brand">
+        <h1>AgeWell360</h1>
+        <p>Compassionate care, intelligent insights — for every stage of life.</p>
+    </div>
 
-<p>
-AgeWell360 is an AI-powered elderly care platform designed to help families,
-caregivers, and NGOs monitor senior citizens safely.
-</p>
+</div>
 
-<p>
-The system works passively, without requiring elders to use mobile applications.
-</p>
+<section class="home-hero-image" style="background-image:url('{% static "images/home-hero.jpg" %}');"></section>
 
-<a href="/select-role/">
-    <button>Get Started</button>
-</a>
 {% endblock %}

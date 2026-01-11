@@ -1,0 +1,104 @@
+/* Features page styles for AgeWell360 */
+:root{
+  --accent-start: #6ee7f6;
+  --accent-end: #7b61ff;
+  --muted: #6b6b6b;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Arial, Helvetica, sans-serif;background:#f7f9fb}
+
+.features-page{display:flex;flex-wrap:wrap;min-height:100vh}
+
+/* LEFT HERO */
+.hero{flex:1 1 420px;min-width:320px}
+.hero-bg{
+  position:relative;
+  width:100%;
+  height:100vh;
+  min-height:520px;
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.home-btn{
+  position:absolute;
+  top:20px;
+  left:20px;
+  background:#ffffff;
+  color:#0b2545; /* dark navy */
+  border:0;padding:10px 14px;border-radius:999px;font-weight:700;text-decoration:none;
+  transition:transform .14s ease, box-shadow .14s ease, background-color .14s ease, color .14s ease;
+  z-index:3; /* sit above hero overlay so clicks work */
+  pointer-events:auto;
+}
+.home-btn:hover{
+  transform:scale(1.06);
+  box-shadow:0 12px 30px rgba(107,81,255,0.22), 0 6px 12px rgba(11,37,69,0.08);
+}
+.home-btn:focus{
+  outline:2px solid rgba(107,81,255,0.16);
+  outline-offset:4px;
+}
+
+.hero-content{
+  text-align:center;padding:28px;max-width:520px;position:relative;z-index:2;
+  /* light panel behind text so dark text reads on any background */
+  background: rgba(255,255,255,0.92);
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(13,24,40,0.06);
+}
+
+/* Hamburger menu styles */
+.menu-wrap{position:absolute;top:14px;left:14px;z-index:40}
+.hamburger{background:rgba(255,255,255,0.96);border:0;padding:10px;border-radius:10px;display:flex;flex-direction:column;gap:4px;cursor:pointer;box-shadow:0 6px 18px rgba(11,37,69,0.08)}
+.hamburger .hamburger-line{display:block;width:20px;height:2px;background:#0b2545;border-radius:2px}
+.hamburger:hover{transform:scale(1.03);box-shadow:0 10px 28px rgba(107,81,255,0.14)}
+
+.menu-dropdown{position:absolute;left:0;top:52px;min-width:160px;background:#fff;border-radius:10px;padding:8px 6px;box-shadow:0 14px 36px rgba(11,37,69,0.12);display:none;flex-direction:column;gap:6px}
+.menu-dropdown.show{display:flex}
+.menu-item{display:block;padding:10px 14px;color:#0b2545;text-decoration:none;border-radius:8px;font-weight:700}
+.menu-item:hover{background:linear-gradient(90deg,var(--accent-start),var(--accent-end));color:#fff}
+
+.hero-content h1{font-size:56px;margin:0 0 12px;font-weight:800;letter-spacing:-1px;color:#0b2545}
+.hero-content .subtitle{font-size:18px;opacity:0.95;margin:0;color:#274060}
+
+/* subtle dark overlay over background image to mute bright areas */
+.hero-bg::before{
+  content:'';position:absolute;inset:0;background:rgba(0,0,0,0.18);z-index:1;border-radius:0;
+}
+
+/* RIGHT CARDS */
+.features-cards{flex:1 1 520px;display:flex;align-items:center;justify-content:center;padding:48px}
+.cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:720px;width:100%}
+
+.feature-card{
+  background: linear-gradient(90deg,var(--accent-start),var(--accent-end));
+  color:#fff;padding:26px;border-radius:14px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;
+  min-height:180px;box-shadow:0 18px 40px rgba(13,24,40,0.25);transition:transform .18s ease,box-shadow .18s ease,filter .18s ease;
+}
+.feature-card h3{margin:0;font-size:20px;font-weight:800;text-transform:uppercase}
+.feature-card .start{background:#fff;border:0;padding:10px 22px;border-radius:999px;font-weight:800;color:var(--accent-end);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,border .12s ease}
+/* ensure start button is on top of its card for hover and clicks */
+.feature-card .start{z-index:2;pointer-events:auto}
+
+.feature-card:hover{transform:translateY(-8px);box-shadow:0 28px 60px rgba(107,81,255,0.18);filter:drop-shadow(0 8px 30px rgba(107,81,255,0.12))}
+.feature-card:hover .start{transform:scale(1.03);box-shadow:0 8px 22px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.06)}
+
+/* Make Start button white pill and strong text */
+.start:hover{transform:scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,0.12);}
+
+/* Responsive */
+@media (max-width:900px){
+  .hero-bg{height:48vh;min-height:420px}
+  .features-page{flex-direction:column}
+  .features-cards{padding:24px}
+}
+@media (max-width:520px){
+  .hero-content h1{font-size:36px}
+  .cards-grid{grid-template-columns:1fr;gap:16px}
+  .hero-bg{min-height:360px}
+}

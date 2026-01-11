@@ -1,0 +1,80 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Features — AgeWell360</title>
+  <link rel="stylesheet" href="{% static 'css/features.css' %}">
+</head>
+<body>
+  <main class="features-page">
+    <section class="hero">
+      <div class="hero-bg" style="background-image: url('{% static "images/features-bg.jpg" %}');">
+        <div class="menu-wrap">
+          <button id="menuBtn" class="hamburger" aria-expanded="false" aria-controls="menuList" aria-label="Open menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+          <nav id="menuList" class="menu-dropdown" role="menu" aria-hidden="true">
+            <a role="menuitem" class="menu-item" href="/">Home</a>
+            <a role="menuitem" class="menu-item" href="/profile/">Profile</a>
+            <a role="menuitem" class="menu-item" href="/about/">About</a>
+            <a role="menuitem" class="menu-item" href="{% url 'logout' %}">Logout</a>
+          </nav>
+        </div>
+        <div class="hero-content">
+          <h1>Features</h1>
+          <p class="subtitle">Smart Technology for Safer Aging</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-cards">
+      <div class="cards-grid">
+        <div class="feature-card">
+          <h3>Prescription Simplification</h3>
+          <button class="start">START</button>
+        </div>
+
+        <div class="feature-card">
+          <h3>Doctor Consultation</h3>
+          <button class="start">START</button>
+        </div>
+
+        <div class="feature-card">
+          <h3>Medication Reminder</h3>
+          <button class="start">START</button>
+        </div>
+
+        <div class="feature-card">
+          <h3>Appointment Schedule</h3>
+          <button class="start">START</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
+<script>
+// Toggle menu dropdown
+const menuBtn = document.getElementById('menuBtn');
+const menuList = document.getElementById('menuList');
+if(menuBtn){
+  menuBtn.addEventListener('click', function(e){
+    const showing = menuList.classList.toggle('show');
+    menuBtn.setAttribute('aria-expanded', showing ? 'true' : 'false');
+    menuList.setAttribute('aria-hidden', showing ? 'false' : 'true');
+  });
+  // close when clicking outside
+  document.addEventListener('click', function(e){
+    if(!menuBtn.contains(e.target) && !menuList.contains(e.target)){
+      menuList.classList.remove('show');
+      menuBtn.setAttribute('aria-expanded','false');
+      menuList.setAttribute('aria-hidden','true');
+    }
+  });
+}
+</script>
