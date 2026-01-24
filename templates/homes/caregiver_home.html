@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="home-container">
+  <nav class="role-nav">
+    <div class="nav-brand">AgeWell360</div>
+    <div class="nav-menu">
+      <a href="{% url 'caregiver_home' %}" class="nav-link active">Home</a>
+      <a href="{% url 'features' %}" class="nav-link">Features</a>
+      <a href="{% url 'caregiver_profile' %}" class="nav-link">Profile</a>
+      <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+    </div>
+  </nav>
+
+  <main class="home-main">
+    <section class="hero-section">
+      <h1>Caregiver Home</h1>
+      <p>Welcome to your Caregiver Interface</p>
+      <p class="subtitle">This is your personalized dashboard for managing caregiving tasks.</p>
+    </section>
+
+    <section class="content-section">
+      <div class="card">
+        <h2>Your Dashboard</h2>
+        <p>This is a dedicated space for caregivers to manage their responsibilities and coordinate care.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<style>
+  .home-container {
+    min-height: 100vh;
+    background: #f5f5f5;
+  }
+
+  .role-nav {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+
+  .home-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .hero-section {
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .hero-section h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+
+  .hero-section p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+
+  .subtitle {
+    font-size: 1rem !important;
+    color: #888 !important;
+    margin-top: 0.5rem;
+  }
+
+  .content-section {
+    margin-top: 2rem;
+  }
+
+  .card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+
+  .card p {
+    color: #666;
+    line-height: 1.6;
+  }
+</style>
+
+{% endblock %}

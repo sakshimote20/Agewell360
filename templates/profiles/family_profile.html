@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="profile-top-banner">
+  <div class="banner-inner">
+    <div class="banner-title">AgeWell360 - Family Member Profile</div>
+  </div>
+</div>
+
+<main class="profile-page">
+  <div class="profile-header">
+    <h2>Complete Your Profile</h2>
+    <p>Please provide your information to get started</p>
+  </div>
+
+  <section class="profile-card">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <div class="form-row">
+        <label for="full_name">Full Name</label>
+        <input type="text" id="full_name" name="full_name" value="{{ profile.full_name }}" required>
+      </div>
+
+      <div class="form-row">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" value="{{ profile.age }}" min="0" max="150">
+      </div>
+
+      <div class="form-row">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" value="{{ profile.phone }}">
+      </div>
+
+      <div class="form-row">
+        <label for="family_contact">Emergency Contact</label>
+        <input type="tel" id="family_contact" name="family_contact" value="{{ profile.family_contact }}">
+      </div>
+
+      <div class="form-row">
+        <label for="address">Address</label>
+        <textarea id="address" name="address">{{ profile.address }}</textarea>
+      </div>
+
+      <div class="form-row">
+        <label for="photo">Profile Photo</label>
+        <input type="file" id="photo" name="photo" accept="image/*">
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Complete Profile</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+{% endblock %}

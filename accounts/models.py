@@ -5,7 +5,15 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
+    ROLE_CHOICES = [
+        ('elderly', 'Elderly User'),
+        ('caregiver', 'Caregiver'),
+        ('family', 'Family Member'),
+        ('doctor', 'Doctor'),
+    ]
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='elderly')
     full_name = models.CharField(max_length=200, blank=True)
     age = models.PositiveIntegerField(null=True, blank=True)
     phone = models.CharField(max_length=50, blank=True)
