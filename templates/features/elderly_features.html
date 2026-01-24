@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="features-page">
+    <section class="hero">
+        <div class="hero-bg" style="background-image: url('{% static "images/features-bg.jpg" %}');">
+            <div class="hero-content">
+                <h1>Features for Elderly</h1>
+                <p class="subtitle">Smart Technology for Safer Aging</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-cards">
+        <div class="cards-grid">
+            <div class="feature-card">
+                <h3>Prescription Simplification</h3>
+                <button class="start">START</button>
+            </div>
+
+            <div class="feature-card">
+                <h3>Doctor Consultation</h3>
+                <button class="start">START</button>
+            </div>
+
+            <div class="feature-card">
+                <h3>Medication Reminder</h3>
+                <button class="start">START</button>
+            </div>
+
+            <div class="feature-card">
+                <h3>Appointment Schedule</h3>
+                <button class="start">START</button>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

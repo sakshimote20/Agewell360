@@ -18,4 +18,8 @@ urlpatterns = [
     path('caregiver-home/', views.caregiver_home, name='caregiver_home'),
     path('family-home/', views.family_home, name='family_home'),
     path('doctor-home/', views.doctor_home, name='doctor_home'),
+    # Role-specific features pages
+    path('caregiver-features/', views.caregiver_features, name='caregiver_features'),
+    path('family-features/', views.family_features, name='family_features'),
+    path('doctor-features/', views.doctor_features, name='doctor_features'),
 ]

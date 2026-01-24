@@ -22,10 +22,31 @@
         <div class="site-overlay" id="globalOverlay" tabindex="-1"></div>
         <nav class="side-menu" id="globalSideMenu" aria-hidden="true">
                 <h4>Navigate</h4>
-                <a class="menu-link" href="/home/">Home</a>
-                <a class="menu-link" href="/features/">Features</a>
-                <a class="menu-link" href="/about/">About</a>
-                <a class="menu-link" href="/profile/">Profile</a>
+                
+                <!-- Role-aware navigation links -->
+                {% if user.profile.role == 'elderly' %}
+                    <a class="menu-link" href="{% url 'home' %}">Home</a>
+                    <a class="menu-link" href="{% url 'profile' %}">Profile</a>
+                    <a class="menu-link" href="{% url 'features' %}">Features</a>
+                {% elif user.profile.role == 'caregiver' %}
+                    <a class="menu-link" href="{% url 'caregiver_home' %}">Home</a>
+                    <a class="menu-link" href="{% url 'caregiver_profile' %}">Profile</a>
+                    <a class="menu-link" href="{% url 'caregiver_features' %}">Features</a>
+                {% elif user.profile.role == 'family' %}
+                    <a class="menu-link" href="{% url 'family_home' %}">Home</a>
+                    <a class="menu-link" href="{% url 'family_profile' %}">Profile</a>
+                    <a class="menu-link" href="{% url 'family_features' %}">Features</a>
+                {% elif user.profile.role == 'doctor' %}
+                    <a class="menu-link" href="{% url 'doctor_home' %}">Home</a>
+                    <a class="menu-link" href="{% url 'doctor_profile' %}">Profile</a>
+                    <a class="menu-link" href="{% url 'doctor_features' %}">Features</a>
+                {% else %}
+                    <a class="menu-link" href="{% url 'home' %}">Home</a>
+                    <a class="menu-link" href="{% url 'profile' %}">Profile</a>
+                    <a class="menu-link" href="{% url 'features' %}">Features</a>
+                {% endif %}
+                
+                <!-- Common logout link for all roles -->
                 <a class="menu-link" href="{% url 'logout' %}">Logout</a>
         </nav>
         {% endif %}

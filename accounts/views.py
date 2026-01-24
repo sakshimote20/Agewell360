@@ -7,8 +7,47 @@ from django.contrib import messages
 from .models import Profile
 
 
+@login_required
 def features_view(request):
-    return render(request, 'accounts/features.html')
+    """Elderly features page - role-specific redirect"""
+    profile = request.user.profile
+    if profile.role == 'elderly':
+        return render(request, 'features/elderly_features.html')
+    elif profile.role == 'caregiver':
+        return redirect('caregiver_features')
+    elif profile.role == 'family':
+        return redirect('family_features')
+    elif profile.role == 'doctor':
+        return redirect('doctor_features')
+    else:
+        return render(request, 'features/elderly_features.html')
+
+
+@login_required
+def caregiver_features(request):
+    """Caregiver features page - only accessible to caregivers"""
+    profile = request.user.profile
+    if profile.role != 'caregiver':
+        return redirect('features')
+    return render(request, 'features/caregiver_features.html')
+
+
+@login_required
+def family_features(request):
+    """Family Member features page - only accessible to family members"""
+    profile = request.user.profile
+    if profile.role != 'family':
+        return redirect('features')
+    return render(request, 'features/family_features.html')
+
+
+@login_required
+def doctor_features(request):
+    """Doctor features page - only accessible to doctors"""
+    profile = request.user.profile
+    if profile.role != 'doctor':
+        return redirect('features')
+    return render(request, 'features/doctor_features.html')
 
 
 def login_view(request):
